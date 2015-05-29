@@ -1,7 +1,10 @@
 package fstoianov.htlgrieskirchen.at.dailypics;
 
 import android.app.ListActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -85,7 +89,12 @@ public class PicsList extends ListActivity {
                 String id = item.getString("id");
                 String date = item.getString("date");
                 String name = item.getString("name");
+                String file = item.getString("file");
                 Log.i("bildername", name + "");
+                BigInteger bigIntege = new BigInteger(file, 2);
+                byte[] binaryData = bigIntege.toByteArray();
+                byte[] decoded = Base64.decode(binaryData, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
                 data.add(name);
             }
 
