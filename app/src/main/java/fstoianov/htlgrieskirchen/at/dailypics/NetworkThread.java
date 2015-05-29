@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
  * Created by fstoianov on 29.05.2015.
  */
 public class NetworkThread extends AsyncTask<String, Void, String> {
-    //hallo
+    //hallo2
     PicsList picsList;
 
     public NetworkThread(PicsList picsList)
