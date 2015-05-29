@@ -79,7 +79,7 @@ public class PicsList extends ListActivity {
     public void initList() {
 
 
-        //String json = readGetFromServer(url);
+        //String json = readGetFromServer(url);kkk
 
         try {
             JSONObject jobject = new JSONObject(json);
