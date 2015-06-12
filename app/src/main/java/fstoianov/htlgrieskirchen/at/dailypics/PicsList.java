@@ -3,6 +3,7 @@ package fstoianov.htlgrieskirchen.at.dailypics;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -141,12 +142,13 @@ public class PicsList extends Activity {
         {
             case R.id.menuShow:
             {
+                Intent newscreen = new Intent(getApplication(), ImageShow.class);
 
             }
 
             case R.id.menuSave:
             {
-                //onListItemClick(listView, view, position, id);
+
             }
         }
         return super.onContextItemSelected(item);
