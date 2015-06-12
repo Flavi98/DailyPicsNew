@@ -1,5 +1,6 @@
 package fstoianov.htlgrieskirchen.at.dailypics;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,8 +9,10 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by fstoianov on 29.05.2015.
  */
-public class PicsList extends ListActivity {
+public class PicsList extends Activity {
 
     String url = "http://www.dailypics.16mb.com/get_all_dailypics.php";
     ArrayList<String> data = new ArrayList<String>();
@@ -47,7 +50,7 @@ public class PicsList extends ListActivity {
 
         NetworkThread nt = new NetworkThread(this);
         nt.execute();
-        list = (ListView)findViewById(android.R.id.listView);
+        list = (ListView)findViewById(R.id.listView1);
         registerForContextMenu(list);
 
     }
@@ -120,13 +123,13 @@ public class PicsList extends ListActivity {
         json = json2;
     }
 
-    public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+   /* public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
-        super.onCreateContextMenu(menu, v, menuInfo);
+        //super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.menu_list, menu);
-    }
+    }*/
 
-    public boolean onContextItemSelected(MenuItem item)
+    /**public boolean onContextItemSelected(MenuItem item)
     {
         int id = item.getItemId();
         switch(id)
@@ -144,5 +147,5 @@ public class PicsList extends ListActivity {
             }
         }
         return super.onContextItemSelected(item);
-    }
+    }*/
 }
