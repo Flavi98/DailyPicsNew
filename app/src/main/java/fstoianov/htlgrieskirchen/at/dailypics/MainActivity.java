@@ -1,5 +1,6 @@
 package fstoianov.htlgrieskirchen.at.dailypics;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,10 +16,23 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
 
     DrawingView dv ;
     private Paint paint;
+    Bitmap bitmap;
     //private DrawingManager mDrawingManager=null;
 
     @Override
@@ -44,6 +59,13 @@ public class MainActivity extends ActionBarActivity {
             case R.id.showpics:
                 Intent intent = new Intent(this, PicsList.class);
                 startActivity(intent);
+                return true;
+            case R.id.upload:
+                uploadImageToServer();
+                return true;
+            case R.id.takepic:
+                Intent intent1 = new Intent(this, TakePic.class);
+                startActivity(intent1);
                 return true;
 
         }
@@ -68,23 +90,9 @@ public class MainActivity extends ActionBarActivity {
     public void saveViewAsImage(){
         DrawingView content = dv;
         content.setDrawingCacheEnabled(true);
-        Bitmap bitmap = content.getDrawingCache();
+        bitmap = content.getDrawingCache();
         File file, f = null;
         Log.i("nuller", "1");
-        /**if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-         {
-         Log.i("nuller", "2");
-
-         if(!file.exists())
-         {
-         Log.i("nuller", "3");
-         file.mkdirs();
-
-         }
-         Log.i("nuller", "4");
-
-         Log.i("nuller", f.toString());
-         }*/
 
         file =new File("/storage/emulated/0/Pictures");
         Log.i("asdf", file.getAbsolutePath().toString());
@@ -102,11 +110,56 @@ public class MainActivity extends ActionBarActivity {
 
         //BAST IS NEICH
         bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
+
         try {
             ostream.close();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        bitmap = null;
+
+    }
+
+    public void uploadImageToServer(){
+        DrawingView content = dv;
+        content.setDrawingCacheEnabled(true);
+        bitmap = content.getDrawingCache();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        final byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+        Log.i("upload", byteArray.toString());
+
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("Uploading");
+        pd.create();
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://www.dailypics.16mb.com/insert_pic_dailypics.php");
+
+                try {
+                    List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>(2);
+                    nameValuePairList.add(new BasicNameValuePair("file", byteArray.toString()));
+                    nameValuePairList.add(new BasicNameValuePair("picname", System.currentTimeMillis()+".png"));
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
+
+                    HttpResponse response = httpClient.execute(httpPost);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                pd.dismiss();
+            }
+        };
+        t.start();
+
 
     }
 
