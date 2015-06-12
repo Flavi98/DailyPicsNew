@@ -52,7 +52,7 @@ public class PicsList extends Activity {
         nt.execute();
         list = (ListView)findViewById(R.id.listView1);
         registerForContextMenu(list);
-
+        readGetFromServer(url);
     }
 
     private String readGetFromServer(String url) {
@@ -63,11 +63,14 @@ public class PicsList extends Activity {
             response = client.execute(request);
             InputStream in = response.getEntity().getContent();
             String sJson = inputStreamToString(in);
+            initList();
             return sJson;
         } catch (IOException e) {
             e.printStackTrace();
             return e.getMessage();
         }
+
+
     }
 
     private String inputStreamToString(InputStream is) {
@@ -105,6 +108,7 @@ public class PicsList extends Activity {
                 byte[] decoded = Base64.decode(binaryData, Base64.DEFAULT);
                 bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
                 data.add(name);
+                Log.i("Data file", name);
             }
 
         } catch (JSONException e) {
