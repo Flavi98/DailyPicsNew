@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
     DrawingView dv ;
     private Paint paint;
     Bitmap bitmap;
-    //private DrawingManager mDrawingManager=null;
+    //private DrawingMapjasdfnager mDrawingManager=null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
