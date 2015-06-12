@@ -1,11 +1,14 @@
 package fstoianov.htlgrieskirchen.at.dailypics;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,7 +33,9 @@ public class PicsList extends ListActivity {
 
     String url = "http://www.dailypics.16mb.com/get_all_dailypics.php";
     ArrayList<String> data = new ArrayList<String>();
+    private ListView list;
     String json;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,8 @@ public class PicsList extends ListActivity {
 
         NetworkThread nt = new NetworkThread(this);
         nt.execute();
-
+        list = (ListView)findViewById(android.R.id.listView);
+        registerForContextMenu(list);
 
     }
 
@@ -94,7 +100,7 @@ public class PicsList extends ListActivity {
                 BigInteger bigIntege = new BigInteger(file, 2);
                 byte[] binaryData = bigIntege.toByteArray();
                 byte[] decoded = Base64.decode(binaryData, Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+                bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
                 data.add(name);
             }
 
@@ -112,5 +118,31 @@ public class PicsList extends ListActivity {
     public void setJson(String json2)
     {
         json = json2;
+    }
+
+    public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        switch(id)
+        {
+            case R.id.menuShow
+            {
+                private ImageView mImageView;
+                mImageView = (ImageView) findViewById(R.id.imageViewId);
+                mImageView.setImageBitmap(bitmap);
+            }
+
+            case R.id.menuSave
+            {
+                onListItemClick(listView, view, position, id);
+            }
+        }
+        return super.onContextItemSelected(item);
     }
 }
