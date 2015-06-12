@@ -2,9 +2,12 @@ package fstoianov.htlgrieskirchen.at.dailypics;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,6 +45,7 @@ public class TakePic extends Activity{
     private Uri imageUri;
 
     public void takePhoto() {
+
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
          file= null;
         f= null;

@@ -146,7 +146,7 @@ public class PicsList extends Activity {
 
             case R.id.menuSave:
             {
-                onListItemClick(listView, view, position, id);
+                //onListItemClick(listView, view, position, id);
             }
         }
         return super.onContextItemSelected(item);
