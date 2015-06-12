@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -127,29 +128,27 @@ public class PicsList extends Activity {
         json = json2;
     }
 
-   /* public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+   public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
         //super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-    }*/
+        getMenuInflater().inflate(R.menu.menu_list, (Menu) menu);
+    }
 
-    /**public boolean onContextItemSelected(MenuItem item)
+    public boolean onContextItemSelected(MenuItem item)
     {
         int id = item.getItemId();
         switch(id)
         {
-            case R.id.menuShow
+            case R.id.menuShow:
             {
-                private ImageView mImageView;
-                mImageView = (ImageView) findViewById(R.id.imageViewId);
-                mImageView.setImageBitmap(bitmap);
+
             }
 
-            case R.id.menuSave
+            case R.id.menuSave:
             {
                 onListItemClick(listView, view, position, id);
             }
         }
         return super.onContextItemSelected(item);
-    }*/
+    }
 }
