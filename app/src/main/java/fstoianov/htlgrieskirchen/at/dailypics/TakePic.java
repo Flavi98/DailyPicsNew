@@ -71,9 +71,10 @@ public class TakePic extends Activity{
                     Bitmap bitmap;
                     try {
                         bitmap = android.provider.MediaStore.Images.Media
-                                .getBitmap(cr, selectedImage);
+                                .getBitmap(this.getContentResolver(), selectedImage);
 
                         imageView.setImageBitmap(bitmap);
+                        //imageView.setImageURI(selectedImage);
                         imageView.invalidate();
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();
