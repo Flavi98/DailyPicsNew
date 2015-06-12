@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
     DrawingView dv ;
     private Paint paint;
     Bitmap bitmap;
-    //private DrawingMapjasdfnager mDrawingManager=null;
+    //private DrawingManager mDrawingManager=null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -62,6 +62,10 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             case R.id.upload:
                 uploadImageToServer();
+                return true;
+            case R.id.takepic:
+                Intent intent1 = new Intent(this, TakePic.class);
+                startActivity(intent1);
                 return true;
 
         }

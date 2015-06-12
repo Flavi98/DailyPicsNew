@@ -7,5 +7,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/upload" android:title="Upload Picture"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/takepic" android:title="Take Pictures"
+        android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>
 
