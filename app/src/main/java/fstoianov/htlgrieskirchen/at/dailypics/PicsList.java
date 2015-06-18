@@ -40,7 +40,8 @@ public class PicsList extends Activity {
     ArrayList<String> data = new ArrayList<String>();
     private ListView list;
     String json;
-    Bitmap bitmap;
+    byte[] binaryData;
+    byte[] decoded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +107,8 @@ public class PicsList extends Activity {
                 String file = item.getString("file");
                 Log.i("bildername", name + "");
                 BigInteger bigIntege = new BigInteger(file, 2);
-                byte[] binaryData = bigIntege.toByteArray();
-                byte[] decoded = Base64.decode(binaryData, Base64.DEFAULT);
-                bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+                binaryData = bigIntege.toByteArray();
+                decoded = Base64.decode(binaryData, Base64.DEFAULT);
                 data.add(name);
                 Log.i("Data file", name);
             }
@@ -143,7 +143,8 @@ public class PicsList extends Activity {
             case R.id.menuShow:
             {
                 Intent newscreen = new Intent(getApplication(), ImageShow.class);
-
+                newscreen.putExtra("BinaryData", binaryData);
+                newscreen.putExtra("Decoded", decoded);
             }
 
             case R.id.menuSave:

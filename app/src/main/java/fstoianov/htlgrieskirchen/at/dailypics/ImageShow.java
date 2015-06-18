@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -25,6 +26,14 @@ public class ImageShow extends Activity {
         Intent i = getIntent();
         binaryData = i.getByteArrayExtra("BinaryData");
         decoded = i.getByteArrayExtra("Decoded");
+        image();
+    }
+
+    public void image()
+    {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        imageView.setImageBitmap(bitmap);
     }
 
 

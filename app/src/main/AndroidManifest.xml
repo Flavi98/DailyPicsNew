@@ -21,12 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PicsList">
+        <activity android:name=".PicsList"/>
+        <activity android:name=".ImageShow"/>
+        <activity android:name=".TakePic"/>
 
-        </activity>
-        <activity android:name=".TakePic">
 
-        </activity>
     </application>
 
 </manifest>
