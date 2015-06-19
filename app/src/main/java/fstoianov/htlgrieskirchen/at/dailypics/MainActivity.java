@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -128,7 +129,7 @@ public class MainActivity extends ActionBarActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         final byte[] byteArray = byteArrayOutputStream .toByteArray();
-
+        final String data = Base64.encodeToString(byteArray, Base64.DEFAULT);
         Log.i("upload", byteArray.toString());
 
         final ProgressDialog pd = new ProgressDialog(this);
@@ -143,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
 
                 try {
                     List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>(2);
-                    nameValuePairList.add(new BasicNameValuePair("file", byteArray.toString()));
+                    nameValuePairList.add(new BasicNameValuePair("file", data));
                     nameValuePairList.add(new BasicNameValuePair("picname", System.currentTimeMillis()+".png"));
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 

@@ -1,41 +1,59 @@
 package fstoianov.htlgrieskirchen.at.dailypics;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.AttributeSet;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.webkit.WebView;
 import android.widget.ImageView;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fstoianov on 12.06.2015.
  */
-public class ImageShow extends Activity {
-    byte[] binaryData;
-    byte[] decoded;
+public class ImageShow extends ActionBarActivity {
+    String name;
+    WebView webview;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageshow);
         Intent i = getIntent();
-        binaryData = i.getByteArrayExtra("BinaryData");
-        decoded = i.getByteArrayExtra("Decoded");
-        image();
+        name = i.getStringExtra("name");
+        webview = (WebView) findViewById(R.id.webView);
+
+        image(name);
     }
 
-    public void image()
-    {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
-        ImageView imageView = (ImageView)findViewById(R.id.imageView);
-        imageView.setImageBitmap(bitmap);
+    public void image(String name) {
+        final String nameInsert = name;
+        Log.i("desisaguadalog", nameInsert);
+
+        webview.loadUrl("http://www.dailypics.16mb.com/get_pic_dailypics.php?name=" + nameInsert);
+
+
     }
-
-
 
 }

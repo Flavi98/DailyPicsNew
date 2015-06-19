@@ -40,9 +40,7 @@ public class PicsList extends Activity {
     ArrayList<String> data = new ArrayList<String>();
     private ListView list;
     String json;
-    byte[] binaryData;
-    byte[] decoded;
-
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,41 +53,9 @@ public class PicsList extends Activity {
         nt.execute();
         list = (ListView)findViewById(R.id.listView1);
         registerForContextMenu(list);
-        readGetFromServer(url);
-    }
-
-    private String readGetFromServer(String url) {
-        DefaultHttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(url);
-        HttpResponse response = null;
-        try {
-            response = client.execute(request);
-            InputStream in = response.getEntity().getContent();
-            String sJson = inputStreamToString(in);
-            initList();
-            return sJson;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return e.getMessage();
-        }
-
 
     }
 
-    private String inputStreamToString(InputStream is) {
-        String line = "";
-        StringBuilder total = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-        try {
-            while ((line = rd.readLine()) != null) {
-                total.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return total.toString();
-    }
 
     public void initList() {
 
@@ -102,13 +68,8 @@ public class PicsList extends Activity {
             for (int i = 0; i < jarray.length(); i++) {
                 JSONObject item = jarray.getJSONObject(i);
                 String id = item.getString("id");
-                String date = item.getString("date");
-                String name = item.getString("name");
-                String file = item.getString("file");
+                name = item.getString("picname");
                 Log.i("bildername", name + "");
-                BigInteger bigIntege = new BigInteger(file, 2);
-                binaryData = bigIntege.toByteArray();
-                decoded = Base64.decode(binaryData, Base64.DEFAULT);
                 data.add(name);
                 Log.i("Data file", name);
             }
@@ -119,22 +80,22 @@ public class PicsList extends Activity {
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
-        ListView lv = (ListView) findViewById(android.R.id.list);
-        lv.setAdapter(arrayAdapter);
+        list.setAdapter(arrayAdapter);
 
     }
 
     public void setJson(String json2)
     {
         json = json2;
+        initList();
     }
 
-   public void onCreateContextMenu(Context menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
-        //super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.menu_list, (Menu) menu);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
     }
-
+    @Override
     public boolean onContextItemSelected(MenuItem item)
     {
         int id = item.getItemId();
@@ -143,8 +104,10 @@ public class PicsList extends Activity {
             case R.id.menuShow:
             {
                 Intent newscreen = new Intent(getApplication(), ImageShow.class);
-                newscreen.putExtra("BinaryData", binaryData);
-                newscreen.putExtra("Decoded", decoded);
+                newscreen.putExtra("name", item.getTitle());
+                startActivity(newscreen);
+
+
             }
 
             case R.id.menuSave:
