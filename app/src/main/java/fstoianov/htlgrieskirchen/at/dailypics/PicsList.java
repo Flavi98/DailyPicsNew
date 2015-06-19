@@ -13,6 +13,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -103,8 +104,11 @@ public class PicsList extends Activity {
         {
             case R.id.menuShow:
             {
+                ContextMenu.ContextMenuInfo info = item.getMenuInfo();
+                AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo)info;
+                int  pos = adapterInfo.position;
                 Intent newscreen = new Intent(getApplication(), ImageShow.class);
-                newscreen.putExtra("name", item.getTitle());
+                newscreen.putExtra("name", data.get(pos));
                 startActivity(newscreen);
 
 
