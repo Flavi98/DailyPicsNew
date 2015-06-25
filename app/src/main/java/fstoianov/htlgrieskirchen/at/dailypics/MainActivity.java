@@ -129,8 +129,13 @@ public class MainActivity extends ActionBarActivity {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        final byte[] byteArray = byteArrayOutputStream .toByteArray();
-        final String data = Base64.encodeToString(byteArray, Base64.URL_SAFE);
+
+
+
+        try {
+            final byte[] byteArray = byteArrayOutputStream.toString().getBytes("CP1252");
+          final String  data = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
 
         Log.i("upload", byteArray.toString());
 
@@ -162,7 +167,9 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         t.start();
-
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
     }
 
