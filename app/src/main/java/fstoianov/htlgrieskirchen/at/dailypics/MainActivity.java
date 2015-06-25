@@ -52,6 +52,13 @@ public class MainActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void clearView(){
+        dv = new DrawingView(this);
+        setContentView(dv);
+
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -69,6 +76,9 @@ public class MainActivity extends ActionBarActivity {
             case R.id.takepic:
                 Intent intent1 = new Intent(this, TakePic.class);
                 startActivity(intent1);
+                return true;
+            case R.id.delete:
+                clearView();
                 return true;
 
         }
@@ -215,6 +225,10 @@ public class MainActivity extends ActionBarActivity {
             bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
 
+        }
+        public void setCanvas(Canvas canvasNew){
+            canvas = new Canvas(bitmap);
+            invalidate();
         }
         @Override
         protected void onDraw(Canvas canvas) {

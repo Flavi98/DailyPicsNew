@@ -9,6 +9,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/takepic" android:title="Take Picture"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/delete" android:title="Delete Drawings"
+        android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>
 
