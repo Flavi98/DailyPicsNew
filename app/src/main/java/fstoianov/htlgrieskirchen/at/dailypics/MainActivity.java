@@ -23,6 +23,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -129,7 +130,8 @@ public class MainActivity extends ActionBarActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         final byte[] byteArray = byteArrayOutputStream .toByteArray();
-        final String data = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        final String data = Base64.encodeToString(byteArray, Base64.URL_SAFE);
+
         Log.i("upload", byteArray.toString());
 
         final ProgressDialog pd = new ProgressDialog(this);

@@ -88,6 +88,8 @@ public class TakePic extends Activity{
                         Log.e("Cameraeee", e.toString());
                     }
                 }
+
+
         }
     }
 }
