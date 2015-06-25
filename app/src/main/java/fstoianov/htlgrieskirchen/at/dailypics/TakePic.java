@@ -80,7 +80,7 @@ public class TakePic extends Activity{
                         imageView.setImageBitmap(bitmap);
                         //imageView.setImageURI(selectedImage);
                         imageView.invalidate();
-                        Toast.makeText(this, selectedImage.toString(),
+                        Toast.makeText(this, "Picture saved successfully!",
                                 Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)

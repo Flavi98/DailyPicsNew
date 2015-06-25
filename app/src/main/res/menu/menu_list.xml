@@ -5,8 +5,4 @@
         android:id="@+id/menuShow">
     </item>
 
-    <item
-        android:title="Save"
-        android:id="@+id/menuSave">
-    </item>
 </menu>

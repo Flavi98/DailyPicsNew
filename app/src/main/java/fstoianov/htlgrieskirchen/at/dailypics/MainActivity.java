@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -94,21 +95,20 @@ public class MainActivity extends ActionBarActivity {
         content.setDrawingCacheEnabled(true);
         bitmap = content.getDrawingCache();
         File file, f = null;
-        Log.i("nuller", "1");
 
         file =new File("/storage/emulated/0/Pictures");
-        Log.i("asdf", file.getAbsolutePath().toString());
         f = new File(file.getAbsolutePath()+File.separator+ System.currentTimeMillis()+".png");
         FileOutputStream ostream = null;
         try {
-            Log.i("nuller", "5");
             ostream = new FileOutputStream(f);
-            Log.i("nuller", "6");
+            Toast.makeText(this, "Picture saved successfully!",
+                    Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e1) {
-            Log.i("nuller", "7");
+            Toast.makeText(this, "Saving Picture failed!",
+                    Toast.LENGTH_LONG).show();
             e1.printStackTrace();
         }
-        Log.i("nuller", "9");
+
 
         //BAST IS NEICH
         bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
@@ -152,10 +152,11 @@ public class MainActivity extends ActionBarActivity {
                 try {
                     List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>(2);
                     nameValuePairList.add(new BasicNameValuePair("file", data));
-                    nameValuePairList.add(new BasicNameValuePair("picname", System.currentTimeMillis()+".png"));
+                    nameValuePairList.add(new BasicNameValuePair("picname", System.currentTimeMillis() + ".png"));
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
 
                     HttpResponse response = httpClient.execute(httpPost);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (ClientProtocolException e) {
@@ -166,9 +167,13 @@ public class MainActivity extends ActionBarActivity {
                 pd.dismiss();
             }
         };
+            Toast.makeText(this, "Picture uploaded successfully!",
+                    Toast.LENGTH_LONG).show();
         t.start();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Picture Upload Failed!",
+                    Toast.LENGTH_LONG).show();
         }
 
     }

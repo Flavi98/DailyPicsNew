@@ -114,10 +114,6 @@ public class PicsList extends Activity {
 
             }
 
-            case R.id.menuSave:
-            {
-
-            }
         }
         return super.onContextItemSelected(item);
     }
